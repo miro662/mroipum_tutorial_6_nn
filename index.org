@@ -1,7 +1,7 @@
 #+TITLE: Sieci Neuronowe
 #+LANGUAGE: pl
 #+OPTIONS: date:nil timestamp:nil toc:nil num:nil
-#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+REVEAL_PLUGINS: (markdown highlight)
 #+REVEAL_TITLE_SLIDE_BACKGROUND: #996699
 #+REVEAL_DEFAULT_SLIDE_BACKGROUND: #996699
