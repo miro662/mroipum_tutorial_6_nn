@@ -1,0 +1,37 @@
+#+TITLE: Sieci Neuronowe
+#+LANGUAGE: pl
+#+OPTIONS: date:nil timestamp:nil toc:nil num:nil
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_PLUGINS: (markdown highlight)
+#+REVEAL_TITLE_SLIDE_BACKGROUND: #996699
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND: #996699
+
+* No to chodź, Adasiu
+   [[./images/1.png]]
+* Zapraszam na Morenkę
+  [[./images/2.png]]
+** Burdel na Morence   
+   |  A |  B |
+   | 11 | 12 |
+   | 21 | 22 |
+
+* Sweetnight, po angielsku słodka noc
+   [[./images/3.jpg]]
+* Psik, czekaj, Adasiu, kotka wygonię
+   5
+* Chodź, Adasiu, zapraszam do pokoju
+   6
+* Tutaj uprawiają seks
+  7
+* O, zobacz, Adasiu, ja dymam
+  8
+* Czekaj, zamknę Adasiu drzwi
+  9
+* Zamknę Adasiu drzwi i już będę mówił 
+  10
+* Dziękujemy
+** Zespół
+  - Andrzej Ratajczak
+  - Damian Wasilenko
+  - Dawid Macek
+  - Andrzej Ratajczak
