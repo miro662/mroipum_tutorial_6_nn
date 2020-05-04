@@ -2,33 +2,227 @@
 #+LANGUAGE: pl
 #+OPTIONS: date:nil timestamp:nil toc:nil num:nil
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVAL_MATHJAX_URL: https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js
 #+REVEAL_PLUGINS: (markdown highlight)
-#+REVEAL_TITLE_SLIDE_BACKGROUND: #996699
-#+REVEAL_DEFAULT_SLIDE_BACKGROUND: #996699
 
-* No to chodź, Adasiu
-   [[./images/1.png]]
-* Zapraszam na Morenkę
-  [[./images/2.png]]
-** Burdel na Morence   
-   |  A |  B |
-   | 11 | 12 |
-   | 21 | 22 |
+* Neuron
+  - Struktura wzorowana na budowie biologicznego neuronu
+  - Dowolna liczba wejść z różną wagą
+  - Jedno wyjście
 
-* Sweetnight, po angielsku słodka noc
-   [[./images/3.jpg]]
-* Psik, czekaj, Adasiu, kotka wygonię
-   5
-* Chodź, Adasiu, zapraszam do pokoju
-   6
-* Tutaj uprawiają seks
-  7
-* O, zobacz, Adasiu, ja dymam
-  8
-* Czekaj, zamknę Adasiu drzwi
-  9
-* Zamknę Adasiu drzwi i już będę mówił 
-  10
+Wyjście to wynik funkcji aktywacji dla sumy ważonej wejść:
+
+$Y = f(\sum_{i=1}^{n} W_i*X_i)$
+
+  #+attr_html: :width 600px
+   [[./images/1a.png]]
+
+** Funkcja aktywacji
+   Powinna być nieliniowa, aby wyjście nie było kombinacją liniową wejść.
+   [[./images/1b.png]]
+
+* Multi Layer Perceptron - Budowa
+  Budowa MLP polega na zgrupowaniu neuronów w warstwy.
+
+  - Wszystkie neurony w jednej warstwie mają tyle samo wejść.
+  - Wyjście neuronu jest wejściem dla każdego neuronu w kolejnej warstwie.
+
+  $WC_i$ - Liczba wag w warstwie $i$
+
+  $N_i$ - liczba neuronów w warstwie i
+
+  $WC_i$ = $N_i*N_{i-1}$ dla $i\gt1$
+
+  $WC_i$ = $N_i$ dla $i=1$
+
+** 
+  [[./images/2a.png]]
+
+** Backpropagation
+   Celem szkolenia jest zminimaliozwanie funkcji kosztu:
+   $C(w_1, w_2, ..., w_M) =$ np. błąd średniokwadratowy
+
+   Wyznaczenie gradientu  $\nabla C = [\frac{dC}{dw_1}, \frac{dC}{dw_2}, ..., \frac{dC}{dw_M}]$
+   pozwoli na dostosowanie wag i zmniejszenie błędu.
+   
+   Aby wyznaczyć elementy wektora $\nabla C$ stosuje się algorytm ~propagacji wstecznej~. 
+   
+   Konceptualnie jest to po prostu liczenie pochodnych po różnych wagach przy użyciu ~reguły łańcuchowej~.
+** Przykłady
+   - $x$ i $y$ to stałe wektory o równych wymiarach
+   - $C(y, f^N(W^Nf^{N-1}(W^{N-1}...f^1(W^x))))$ to funkcja kosztu, zmiennymi są wagi
+   - $W^i$ to macierz wag w i-tej warstwie
+   - $W^i_j$ to wektor wag wejściowych w i-tej warstwie dla j-tego neuronu
+   - $z^i_j$ to nieaktywowane wyjście j-tego neuronu w i-tej warstwie
+   - $a^i_j = f(z^i_j)$
+
+   Przykłady:
+   - $\frac{dC}{dW^N_j} = \frac{dC}{da^N}\frac{da^N}{dz^N}\frac{dz^N}{dW^N_j}$
+   - $\frac{dC}{dW^{N-1}_j} = \frac{dC}{da^N}\frac{da^N}{dz^N}\frac{dz^N}{da^{N-1}}\frac{da^{N-1}}{dz^{N-1}}\frac{dz^{N-1}}{dW^{N-1}_j}$
+     
+** Vanishing gradient problem
+   + Wartości gradientów w pierwszych warstawch sieci osiągają bardzo małe wartości, przez co prawie się nie zmieniają.
+   + Wynika to z tego, że podczas liczenia pochodnych z użyciem reguły łańcuchowej mnożymy wiele małych wartości.
+   + Rozwiązania: Batch Normalization, użycie funkcji aktywacji, które nie skutkują małymi pochodnymi.
+
+     [[./images/2b.jpg]]
+ 
+* Metody uczenia
+  - *SGD* - Stochastic Gradient Descent
+   + Gradient jest liczony dla każdej próbki z osobna, a nie całego zbioru danych na raz
+   + Przyspiesza czas szkolenia
+  - *SGD with momentum* 
+   + Przy liczeniu gradientu brana jest pod uwagę uśredniona wartość z wielu poprzednich aktualizacji lub tylko poprzednia aktualizacja.
+   + Nie modyfikujemy stałej uczenia $\alpha$
+   + Parametr $\beta$ określa wagę poprzednich aktualizacji
+   + Nowa wartość: 
+    - $j$ - indeks wagi
+    - $i$ - iteracja
+    - $\Delta w_j^{i}=\beta \Delta w_{j}^{i-1}+\alpha \frac{dC}{dw_j}$
+** 
+  - *RMSProp*
+    + Wykorzystuje średnią z przeszłych gradientów do dostoswanie stałej uczenia $\alpha$
+    + Nowa wartość:
+      - $v_j$ - średnia kwadratowa poprzednich gradientów
+      - $\Delta w_j=\frac{\alpha}{\sqrt{v_j}}\frac{dC}{dw_j}$
+   - *ADAM*
+     + Połączenie *RMSProp* i *SGD with momentum*
+     + Uwzględniamy poprzednie aktualizacje oraz dostosowujemy stałą uczenia $\alpha$
+   - *Nestorov*
+     + Podobna do *SGD with momentum*
+     + Wagi są aktualizowane zgodnie z pędem i dopiero wtedy liczony jest kolejny gradient
+
+* Loss functions
+   - Klasyfiaktory binarne
+     + Binary Cross-Entropy
+
+       [[./images/4a.png]]
+     + Hinge loss
+       
+       [[./images/4c.png]]
+     + Squared Hinge Loss
+
+       [[./images/4d.png]]
+** 
+   - Klasyfikatory wieloklasowe
+     + Categorical Cross-Entropy
+
+       [[./images/4b.png]]
+     + Kullback-Leibler divergence(relative entropy)
+   
+     Pozwala na porónwanie dwóch rozkładów prawdopodobieństwa.
+
+       [[./images/4e.png]]
+* Inicjalizacja wag
+  - Dobra inicjalizacja wag pomaga zredukować *Vanishing Gradient Problem*.
+  - Kilka ważnych cech:
+    + Wagi nie powinny być małe
+    + Wagi nie powinny być takie same
+    + Wagi powinny mieć wysoką wariancję
+    + Wybór metody inicjalizacja zależny od użytych funkcji aktywacji
+    + Pod uwagę brana ilość wejść/wyjść w wartswie.
+ [[./images/5a.png]]
+  
+** Stała uczenia
+    - Określa jak duży krok wykonywany jest przy aktualizacji wag.
+    - *Learning rate decay* - wraz z liczbą epok zmniejsza się stałą uczenia.
+      + Pozwala na zmniejszenie szansy na 'przeskoczenie' minimum
+      + Przypomina *simulated annealing*
+  
+  [[./images/5b.png]]
+
+** Batch normalization
+   - Normalizacja polega na przeskalowaniu cech na ten sam przedział. Najczęście na [0; 1].
+   - *Batch normalization* działa tak samo jak normalizacja danych wejściowych, z tym że znajduje się pomiędzy warstwami.
+   - Co daje *batch normalization*?
+     + Przestrzeń wejść jest bardziej symetryczna - można używać wyższych stałych uczenia
+     + Zmniejsza istotność wag początkowych.
+
+#+attr_html: :width 500px
+  [[./images/5c.png]]
+* Regularyzacja
+  - Celem regularyzacji jest zmniejszenie overfittingu.
+  - Innymi słowy: staramy się zwiększyć bias i zmniejszyć wariancję na zbiorze treningowym.
+  - Poświęcamy dokładność na zbiorze treningowym licząc na otrzymanie lepiej generalizującego modelu.
+** 
+  - Regularyzacja *Dropout*
+
+    Przypisujemy dla warstwy pewne prawdopodobieństwo pominięcia neuronu.
+    
+    Pominięte neurony nie biorą udziału w danej iteracji *gradient descent*.
+
+  - Regularyzacja *L1* i *L2*
+    Polegają na dodaniu pewnego wyrażenia regularyzującego do funkcji kosztu.
+    #+attr_html: :width 600px
+    [[./images/6a.png]]
+** 
+   - Regularyzacja przez *augmentację*
+     + Polega na wygenerowaniu nowych danych treningowych na podstawie już posiadanych.
+     + Zwiększanie ilości danych zmniejsza wariancję i zwiększa bias.
+     
+* Sieci CNN - budowa
+  - Sieci CCN składają się z kilku następujących typów warstw:
+   + Warstwy konwolucyjne
+   + Warstwy poolingu
+   + Warstwy w pełni połączone - takie same jak w MLP
+
+[[./images/7a.png]]
+
+** Warstwy konwolucyjne
+   - Wykonują proces *konwolucji*, polegający na, aplikacji filtra na pewnym framencie danych wejściowych.
+   - Aplikacja filtra polega na obliczeniu *dot productu* między filtrem a fragmentem danych.
+   - Parametry:
+     + *stride* - pozwala na zmianę sposobu przesuwania filtra
+     + *padding* - pozwala na dodanie zer wokół, aby uniknąć zmniejszania utraty wymiarów
+
+#+attr_html: :width 550px
+[[./images/7b.png]]
+   
+** 
+   - W warstwach konwolucyjnych zwykle znajduje się więcej niż jeden filtr.
+     [[./images/7d.png]]
+** Warstwy poolingu
+   - Pozwala na *downsampling* wejść.
+   - Parametr *filter* pozwala na wybór wielkości okna do uśrednienia.
+   - Parametr *stride* pozwala określić jak wygląda przesuwanie okna.
+   - Dwie popularne sposoby poolingu:
+     + Average pooling - uśredniona wartość z okna
+     + Maximum pooling - maksymalna wartość z okna
+
+#+attr_html: :width 600px
+[[./images/7c.png]]       
+
+* Sieci CNN - uczenie
+  - W przypadku warstw końcowych trening wygląda identycznie jak w MLP.
+  - Warstwy z poolingiem nie posiadają parametrów do trenowania.
+  - W warstwach konwolucyjnych wagami są wartości filtrów.
+  - Ideowo backpropagation oraz dostosowywanie wag działa jak w MLP.
+  - Przy liczeniu pochodnych trzeba uwzględnić warstwy poolingu.
+* Scikitlearn
+  - Wsparcie dla MLP:
+    + [[https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html][sklearn.neural​_network.MLPClassifier]]
+    + [[https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPRegressor.html][sklearn.neural​_network.MLPRegressor]]
+  - API identycznie jak dla pozostałych modeli: ~fit(X, y)~, ~predict(x)~, etc...
+  - Można dostosować wielkości ukrytych wartsw, funkcje aktywacji, solvery i inne hiperparametry.
+  - Brak wsparcia dla akceleracji GPU.
+  - Brak wsparcia dla CNN.
+  - Nie nadaje się do produkcyjnych zastosowań.
+* Keras
+  - Wysokopoziomowa biblioteka umożliwiająca łatwe definiowanie sieci neuronowych.
+  - Posiada wsparcie dla większości popularnych typów warstw.
+  - Pozwala na tworzenie własnych typów warstw.
+  - Umożliwiającą akcelerację GPU, wspiera backendy dla kart Nvidia i AMD.
+  - Kompatybilny z API Scikitlearn, nakładka [[https://keras.io/scikit-learn-api/][KerasClassifier]]
+   
+  #+attr_html: :width 600px
+  [[./images/9.png]]
+
+* PyTorch
+  - W porównaniu do Kerasa dość niskopoziomowa.
+  - Bardziej elastycznia niż Keras, ale trudniejsza w użyciu.
+  - *PyTorch Tensors* -  działają one podobnie jak tablice w numpy, ale operacje na nich są akcelerowane za pomocą GPU.
+  - Wspiera akcelerację GPU, ale tylko dla kart Nvidia z rdzeniami CUDA.
+  - Wspiera Javę i C++
 * Dziękujemy
 ** Zespół
   - Andrzej Ratajczak
