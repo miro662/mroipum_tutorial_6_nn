@@ -21,66 +21,135 @@
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide" data-background="#996699">
+<section id="sec-title-slide">
 <h1 class="title">Sieci Neuronowe</h1>
 </section>
 
 <section>
-<section id="slide-orgba9849a" data-background="#996699">
-<h2 id="orgba9849a">No to chodź, Adasiu</h2>
+<section id="slide-orgef9a937">
+<h2 id="orgef9a937">Neuron</h2>
+<ul>
+<li>Struktura wzorowana na budowie biologicznego neuronu</li>
+<li>Dowolna liczba wejść z różną wagą</li>
+<li>Jedno wyjście</li>
+
+</ul>
+
+<p>
+Wyjście to wynik funkcji aktywacji dla sumy ważonej wejść:
+</p>
+
+<p>
+\(Y = f(\sum_{i=1}^{n} W_i*X_i)\)
+</p>
+
 
 <div class="figure">
-<p><img src="./images/1.png" alt="1.png" />
+<p><img src="./images/1a.png" alt="1a.png" width="600px" />
 </p>
 </div>
+
+</section>
+<section id="slide-orgb8100fd">
+<h3 id="orgb8100fd">Funkcja aktywacji</h3>
+<p>
+Powinna być nieliniowa, aby wyjście nie było kombinacją liniową wejść.
+<img src="./images/1b.png" alt="1b.png" />
+</p>
+
 </section>
 </section>
 <section>
-<section id="slide-orgcaae344" data-background="#996699">
-<h2 id="orgcaae344">Zapraszam na Morenkę</h2>
+<section id="slide-orgf704fa8">
+<h2 id="orgf704fa8">Multi Layer Perceptron - Budowa</h2>
+<p>
+Budowa MLP polega na zgrupowaniu neuronów w warstwy.
+</p>
+
+<ul>
+<li>Wszystkie neurony w jednej warstwie mają tyle samo wejść.</li>
+<li>Wyjście neuronu jest wejściem dla każdego neuronu w kolejnej warstwie.</li>
+
+</ul>
+
+<p>
+\(WC_i\) - Liczba wag w warstwie \(i\)
+</p>
+
+<p>
+\(N_i\) - liczba neuronów w warstwie i
+</p>
+
+<p>
+\(WC_i\) = \(N_i*N_{i-1}\) dla \(i\gt1\)
+</p>
+
+<p>
+\(WC_i\) = \(N_i\) dla \(i=1\)
+</p>
+
+</section>
+<section id="slide-orge9e81a4">
+<h3 id="orge9e81a4"></h3>
 
 <div class="figure">
 <p><img src="./images/2.png" alt="2.png" />
 </p>
 </div>
+
 </section>
-<section id="slide-org7bae957" data-background="#996699">
-<h3 id="org7bae957">Burdel na Morence</h3>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<section id="slide-org1ae6c98">
+<h3 id="org1ae6c98">Backpropagation</h3>
+<p>
+Celem szkolenia jest zminimaliozwanie funkcji kosztu:
+\(C(w_1, w_2, ..., w_M) =\) np. błąd średniokwadratowy
+</p>
 
+<p>
+Wyznaczenie gradientu  \(\nabla C = [\frac{dC}{dw_1}, \frac{dC}{dw_2}, ..., \frac{dC}{dw_M}]\)
+pozwoli na dostosowanie wag i zmniejszenie błędu.
+</p>
 
-<colgroup>
-<col  class="org-right" />
+<p>
+Aby wyznaczyć elementy wektora \(\nabla C\) stosuje się algorytm <code>propagacji wstecznej</code>. 
+</p>
 
-<col  class="org-right" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-right">A</td>
-<td class="org-right">B</td>
-</tr>
+<p>
+Konceptualnie jest to po prostu liczenie pochodnych po różnych wagach przy użyciu <code>reguły łańcuchowej</code>.
+</p>
+</section>
+<section id="slide-org9a0a086">
+<h3 id="org9a0a086">Przykłady</h3>
+<ul>
+<li>\(x\) i \(y\) to stałe wektory o równych wymiarach</li>
+<li>\(C(y, f^N(W^Nf^{N-1}(W^{N-1}...f^1(W^x))))\) to funkcja kosztu, zmiennymi są wagi</li>
+<li>\(W^i\) to macierz wag w i-tej warstwie</li>
+<li>\(W^i_j\) to wektor wag wejściowych w i-tej warstwie dla j-tego neuronu</li>
+<li>\(z^i_j\) to nieaktywowane wyjście j-tego neuronu w i-tej warstwie</li>
+<li>\(a^i_j = f(z^i_j)\)</li>
 
-<tr>
-<td class="org-right">11</td>
-<td class="org-right">12</td>
-</tr>
+</ul>
 
-<tr>
-<td class="org-right">21</td>
-<td class="org-right">22</td>
-</tr>
-</tbody>
-</table>
+<p>
+Przykłady:
+</p>
+<ul>
+<li>\(\frac{dC}{dW^N_j} = \frac{dC}{da^N}\frac{da^N}{dz^N}\frac{dz^N}{dW^N_j}\)</li>
+<li>\(\frac{dC}{dW^{N-1}_j} = \frac{dC}{da^N}\frac{da^N}{dz^N}\frac{dz^N}{da^{N-1}}\frac{da^{N-1}}{dz^{N-1}}\frac{dz^{N-1}}{dW^{N-1}_j}\)</li>
+
+</ul>
+
 
 </section>
 </section>
 <section>
-<section id="slide-org80aaaa8" data-background="#996699">
-<h2 id="org80aaaa8">Sweetnight, po angielsku słodka noc</h2>
+<section id="slide-orgcf9deee">
+<h2 id="orgcf9deee">Sweetnight, po angielsku słodka noc</h2>
 
 <div class="figure">
 <p><img src="./images/3.jpg" alt="3.jpg" />
@@ -89,61 +158,61 @@
 </section>
 </section>
 <section>
-<section id="slide-org9dd11c4" data-background="#996699">
-<h2 id="org9dd11c4">Psik, czekaj, Adasiu, kotka wygonię</h2>
+<section id="slide-org3d9ca04">
+<h2 id="org3d9ca04">Psik, czekaj, Adasiu, kotka wygonię</h2>
 <p>
 5
 </p>
 </section>
 </section>
 <section>
-<section id="slide-org9708ef0" data-background="#996699">
-<h2 id="org9708ef0">Chodź, Adasiu, zapraszam do pokoju</h2>
+<section id="slide-org398d50f">
+<h2 id="org398d50f">Chodź, Adasiu, zapraszam do pokoju</h2>
 <p>
 6
 </p>
 </section>
 </section>
 <section>
-<section id="slide-org38df0ad" data-background="#996699">
-<h2 id="org38df0ad">Tutaj uprawiają seks</h2>
+<section id="slide-org08e8be3">
+<h2 id="org08e8be3">Tutaj uprawiają seks</h2>
 <p>
 7
 </p>
 </section>
 </section>
 <section>
-<section id="slide-org1189899" data-background="#996699">
-<h2 id="org1189899">O, zobacz, Adasiu, ja dymam</h2>
+<section id="slide-org47b2688">
+<h2 id="org47b2688">O, zobacz, Adasiu, ja dymam</h2>
 <p>
 8
 </p>
 </section>
 </section>
 <section>
-<section id="slide-orgdda02b9" data-background="#996699">
-<h2 id="orgdda02b9">Czekaj, zamknę Adasiu drzwi</h2>
+<section id="slide-org231e3b0">
+<h2 id="org231e3b0">Czekaj, zamknę Adasiu drzwi</h2>
 <p>
 9
 </p>
 </section>
 </section>
 <section>
-<section id="slide-org445e672" data-background="#996699">
-<h2 id="org445e672">Zamknę Adasiu drzwi i już będę mówił</h2>
+<section id="slide-org147141e">
+<h2 id="org147141e">Zamknę Adasiu drzwi i już będę mówił</h2>
 <p>
 10
 </p>
 </section>
 </section>
 <section>
-<section id="slide-orgb83fe40" data-background="#996699">
-<h2 id="orgb83fe40">Dziękujemy</h2>
-<div class="outline-text-2" id="text-orgb83fe40">
+<section id="slide-org5d16f7a">
+<h2 id="org5d16f7a">Dziękujemy</h2>
+<div class="outline-text-2" id="text-org5d16f7a">
 </div>
 </section>
-<section id="slide-org2327e8a" data-background="#996699">
-<h3 id="org2327e8a">Zespół</h3>
+<section id="slide-orgd7bdf41">
+<h3 id="orgd7bdf41">Zespół</h3>
 <ul>
 <li>Andrzej Ratajczak</li>
 <li>Damian Wasilenko</li>

@@ -2,18 +2,64 @@
 #+LANGUAGE: pl
 #+OPTIONS: date:nil timestamp:nil toc:nil num:nil
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVAL_MATHJAX_URL: https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js
 #+REVEAL_PLUGINS: (markdown highlight)
-#+REVEAL_TITLE_SLIDE_BACKGROUND: #996699
-#+REVEAL_DEFAULT_SLIDE_BACKGROUND: #996699
 
-* No to chodź, Adasiu
-   [[./images/1.png]]
-* Zapraszam na Morenkę
+* Neuron
+  - Struktura wzorowana na budowie biologicznego neuronu
+  - Dowolna liczba wejść z różną wagą
+  - Jedno wyjście
+
+Wyjście to wynik funkcji aktywacji dla sumy ważonej wejść:
+
+$Y = f(\sum_{i=1}^{n} W_i*X_i)$
+
+  #+attr_html: :width 600px
+   [[./images/1a.png]]
+
+** Funkcja aktywacji
+   Powinna być nieliniowa, aby wyjście nie było kombinacją liniową wejść.
+   [[./images/1b.png]]
+
+* Multi Layer Perceptron - Budowa
+  Budowa MLP polega na zgrupowaniu neuronów w warstwy.
+
+  - Wszystkie neurony w jednej warstwie mają tyle samo wejść.
+  - Wyjście neuronu jest wejściem dla każdego neuronu w kolejnej warstwie.
+
+  $WC_i$ - Liczba wag w warstwie $i$
+
+  $N_i$ - liczba neuronów w warstwie i
+
+  $WC_i$ = $N_i*N_{i-1}$ dla $i\gt1$
+
+  $WC_i$ = $N_i$ dla $i=1$
+
+** 
   [[./images/2.png]]
-** Burdel na Morence   
-   |  A |  B |
-   | 11 | 12 |
-   | 21 | 22 |
+
+** Backpropagation
+   Celem szkolenia jest zminimaliozwanie funkcji kosztu:
+   $C(w_1, w_2, ..., w_M) =$ np. błąd średniokwadratowy
+
+   Wyznaczenie gradientu  $\nabla C = [\frac{dC}{dw_1}, \frac{dC}{dw_2}, ..., \frac{dC}{dw_M}]$
+   pozwoli na dostosowanie wag i zmniejszenie błędu.
+   
+   Aby wyznaczyć elementy wektora $\nabla C$ stosuje się algorytm ~propagacji wstecznej~. 
+   
+   Konceptualnie jest to po prostu liczenie pochodnych po różnych wagach przy użyciu ~reguły łańcuchowej~.
+** Przykłady
+   - $x$ i $y$ to stałe wektory o równych wymiarach
+   - $C(y, f^N(W^Nf^{N-1}(W^{N-1}...f^1(W^x))))$ to funkcja kosztu, zmiennymi są wagi
+   - $W^i$ to macierz wag w i-tej warstwie
+   - $W^i_j$ to wektor wag wejściowych w i-tej warstwie dla j-tego neuronu
+   - $z^i_j$ to nieaktywowane wyjście j-tego neuronu w i-tej warstwie
+   - $a^i_j = f(z^i_j)$
+
+   Przykłady:
+   - $\frac{dC}{dW^N_j} = \frac{dC}{da^N}\frac{da^N}{dz^N}\frac{dz^N}{dW^N_j}$
+   - $\frac{dC}{dW^{N-1}_j} = \frac{dC}{da^N}\frac{da^N}{dz^N}\frac{dz^N}{da^{N-1}}\frac{da^{N-1}}{dz^{N-1}}\frac{dz^{N-1}}{dW^{N-1}_j}$
+   
 
 * Sweetnight, po angielsku słodka noc
    [[./images/3.jpg]]
