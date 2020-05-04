@@ -36,7 +36,7 @@ $Y = f(\sum_{i=1}^{n} W_i*X_i)$
   $WC_i$ = $N_i$ dla $i=1$
 
 ** 
-  [[./images/2.png]]
+  [[./images/2a.png]]
 
 ** Backpropagation
    Celem szkolenia jest zminimaliozwanie funkcji kosztu:
@@ -59,22 +59,112 @@ $Y = f(\sum_{i=1}^{n} W_i*X_i)$
    Przykłady:
    - $\frac{dC}{dW^N_j} = \frac{dC}{da^N}\frac{da^N}{dz^N}\frac{dz^N}{dW^N_j}$
    - $\frac{dC}{dW^{N-1}_j} = \frac{dC}{da^N}\frac{da^N}{dz^N}\frac{dz^N}{da^{N-1}}\frac{da^{N-1}}{dz^{N-1}}\frac{dz^{N-1}}{dW^{N-1}_j}$
-   
+     
+** Vanishing gradient problem
+   + Wartości gradientów w pierwszych warstawch sieci osiągają bardzo małe wartości, przez co prawie się nie zmieniają.
+   + Wynika to z tego, że podczas liczenia pochodnych z użyciem reguły łańcuchowej mnożymy wiele małych wartości.
+   + Rozwiązania: Batch Normalization, użycie funkcji aktywacji, które nie skutkują małymi pochodnymi.
 
-* Sweetnight, po angielsku słodka noc
-   [[./images/3.jpg]]
-* Psik, czekaj, Adasiu, kotka wygonię
-   5
-* Chodź, Adasiu, zapraszam do pokoju
-   6
-* Tutaj uprawiają seks
-  7
-* O, zobacz, Adasiu, ja dymam
-  8
-* Czekaj, zamknę Adasiu drzwi
-  9
-* Zamknę Adasiu drzwi i już będę mówił 
-  10
+     [[./images/2b.jpg]]
+ 
+* Metody uczenia
+  - *SGD* - Stochastic Gradient Descent
+   + Gradient jest liczony dla każdej próbki z osobna, a nie całego zbioru danych na raz
+   + Przyspiesza czas szkolenia
+  - *SGD with momentum* 
+   + Przy liczeniu gradientu brana jest pod uwagę uśredniona wartość z wielu poprzednich aktualizacji lub tylko poprzednia aktualizacja.
+   + Nie modyfikujemy stałej uczenia $\alpha$
+   + Parametr $\beta$ określa wagę poprzednich aktualizacji
+   + Nowa wartość: 
+    - $j$ - indeks wagi
+    - $i$ - iteracja
+    - $\Delta w_j^{i}=\beta \Delta w_{j}^{i-1}+\alpha \frac{dC}{dw_j}$
+** 
+  - *RMSProp*
+    + Wykorzystuje średnią z przeszłych gradientów do dostoswanie stałej uczenia $\alpha$
+    + Nowa wartość:
+      - $v_j$ - średnia kwadratowa poprzednich gradientów
+      - $\Delta w_j=\frac{\alpha}{\sqrt{v_j}}\frac{dC}{dw_j}$
+   - *ADAM*
+     + Połączenie *RMSProp* i *SGD with momentum*
+     + Uwzględniamy poprzednie aktualizacje oraz dostosowujemy stałą uczenia $\alpha$
+   - *Nestorov*
+     + Podobna do *SGD with momentum*
+     + Wagi są aktualizowane zgodnie z pędem i dopiero wtedy liczony jest kolejny gradient
+
+* Loss functions
+   - Klasyfiaktory binarne
+     + Binary Cross-Entropy
+
+       [[./images/4a.png]]
+     + Hinge loss
+       
+       [[./images/4c.png]]
+     + Squared Hinge Loss
+
+       [[./images/4d.png]]
+** 
+   - Klasyfikatory wieloklasowe
+     + Categorical Cross-Entropy
+
+       [[./images/4b.png]]
+     + Kullback-Leibler divergence(relative entropy)
+   
+     Pozwala na porónwanie dwóch rozkładów prawdopodobieństwa.
+
+       [[./images/4e.png]]
+* Inicjalizacja wag
+  - Dobra inicjalizacja wag pomaga zredukować *Vanishing Gradient Problem*.
+  - Kilka ważnych cech:
+    + Wagi nie powinny być małe
+    + Wagi nie powinny być takie same
+    + Wagi powinny mieć wysoką wariancję
+    + Wybór metody inicjalizacja zależny od użytych funkcji aktywacji
+    + Pod uwagę brana ilość wejść/wyjść w wartswie.
+ [[./images/5a.png]]
+  
+** Stała uczenia
+    - Określa jak duży krok wykonywany jest przy aktualizacji wag.
+    - *Learning rate decay* - wraz z liczbą epok zmniejsza się stałą uczenia.
+      + Pozwala na zmniejszenie szansy na 'przeskoczenie' minimum
+      + Przypomina *simulated annealing*
+  
+  [[./images/5b.png]]
+
+** Batch normalization
+   - Normalizacja polega na przeskalowaniu cech na ten sam przedział. Najczęście na [0; 1].
+   - *Batch normalization* działa tak samo jak normalizacja danych wejściowych, z tym że znajduje się pomiędzy warstwami.
+   - Co daje *batch normalization*?
+     + Przestrzeń wejść jest bardziej symetryczna - można używać wyższych stałych uczenia
+     + Zmniejsza istotność wag początkowych.
+
+#+attr_html: :width 500px
+  [[./images/5c.png]]
+* Regularyzacja
+  - Celem regularyzacji jest zmniejszenie overfittingu.
+  - Innymi słowy: staramy się zwiększyć bias i zmniejszyć wariancję na zbiorze treningowym.
+  - Poświęcamy dokładność na zbiorze treningowym licząc na otrzymanie lepiej generalizującego modelu.
+** 
+  - Regularyzacja *Dropout*
+
+    Przypisujemy dla warstwy pewne prawdopodobieństwo pominięcia neuronu.
+    
+    Pominięte neurony nie biorą udziału w danej iteracji *gradient descent*.
+
+  - Regularyzacja *L1* i *L2*
+    Polegają na dodaniu pewnego wyrażenia regularyzującego do funkcji kosztu.
+    #+attr_html: :width 600px
+    [[./images/6a.png]]
+** 
+   - Regularyzacja przez *augmentację*
+     + Polega na wygenerowaniu nowych danych treningowych na podstawie już posiadanych.
+     + Zwiększanie ilości danych zmniejsza wariancję i zwiększa bias.
+     
+* Sieci konwolucyjne - budowa
+* Sieci konwolucyjne - uczenie
+* Opis scikitlearn
+* Keras
+** PyTorch
 * Dziękujemy
 ** Zespół
   - Andrzej Ratajczak

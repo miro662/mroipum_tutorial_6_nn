@@ -31,8 +31,8 @@
 </section>
 
 <section>
-<section id="slide-orgef9a937">
-<h2 id="orgef9a937">Neuron</h2>
+<section id="slide-org2caa95f">
+<h2 id="org2caa95f">Neuron</h2>
 <ul>
 <li>Struktura wzorowana na budowie biologicznego neuronu</li>
 <li>Dowolna liczba wejść z różną wagą</li>
@@ -55,8 +55,8 @@ Wyjście to wynik funkcji aktywacji dla sumy ważonej wejść:
 </div>
 
 </section>
-<section id="slide-orgb8100fd">
-<h3 id="orgb8100fd">Funkcja aktywacji</h3>
+<section id="slide-org2e2959d">
+<h3 id="org2e2959d">Funkcja aktywacji</h3>
 <p>
 Powinna być nieliniowa, aby wyjście nie było kombinacją liniową wejść.
 <img src="./images/1b.png" alt="1b.png" />
@@ -65,8 +65,8 @@ Powinna być nieliniowa, aby wyjście nie było kombinacją liniową wejść.
 </section>
 </section>
 <section>
-<section id="slide-orgf704fa8">
-<h2 id="orgf704fa8">Multi Layer Perceptron - Budowa</h2>
+<section id="slide-orgfe7b033">
+<h2 id="orgfe7b033">Multi Layer Perceptron - Budowa</h2>
 <p>
 Budowa MLP polega na zgrupowaniu neuronów w warstwy.
 </p>
@@ -94,17 +94,17 @@ Budowa MLP polega na zgrupowaniu neuronów w warstwy.
 </p>
 
 </section>
-<section id="slide-orge9e81a4">
-<h3 id="orge9e81a4"></h3>
+<section id="slide-orgd9c7eca">
+<h3 id="orgd9c7eca"></h3>
 
 <div class="figure">
-<p><img src="./images/2.png" alt="2.png" />
+<p><img src="./images/2a.png" alt="2a.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org1ae6c98">
-<h3 id="org1ae6c98">Backpropagation</h3>
+<section id="slide-org65fed0d">
+<h3 id="org65fed0d">Backpropagation</h3>
 <p>
 Celem szkolenia jest zminimaliozwanie funkcji kosztu:
 \(C(w_1, w_2, ..., w_M) =\) np. błąd średniokwadratowy
@@ -123,8 +123,8 @@ Aby wyznaczyć elementy wektora \(\nabla C\) stosuje się algorytm <code>propaga
 Konceptualnie jest to po prostu liczenie pochodnych po różnych wagach przy użyciu <code>reguły łańcuchowej</code>.
 </p>
 </section>
-<section id="slide-org9a0a086">
-<h3 id="org9a0a086">Przykłady</h3>
+<section id="slide-org8f8f58e">
+<h3 id="org8f8f58e">Przykłady</h3>
 <ul>
 <li>\(x\) i \(y\) to stałe wektory o równych wymiarach</li>
 <li>\(C(y, f^N(W^Nf^{N-1}(W^{N-1}...f^1(W^x))))\) to funkcja kosztu, zmiennymi są wagi</li>
@@ -144,75 +144,308 @@ Przykłady:
 
 </ul>
 
+</section>
+<section id="slide-orga3f0cd4">
+<h3 id="orga3f0cd4">Vanishing gradient problem</h3>
+<ul>
+<li>Wartości gradientów w pierwszych warstawch sieci osiągają bardzo małe wartości, przez co prawie się nie zmieniają.</li>
+<li>Wynika to z tego, że podczas liczenia pochodnych z użyciem reguły łańcuchowej mnożymy wiele małych wartości.</li>
+<li><p>
+Rozwiązania: Batch Normalization, użycie funkcji aktywacji, które nie skutkują małymi pochodnymi.
+</p>
 
-</section>
-</section>
-<section>
-<section id="slide-orgcf9deee">
-<h2 id="orgcf9deee">Sweetnight, po angielsku słodka noc</h2>
 
 <div class="figure">
-<p><img src="./images/3.jpg" alt="3.jpg" />
+<p><img src="./images/2b.jpg" alt="2b.jpg" />
+</p>
+</div></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdf30678">
+<h2 id="orgdf30678">Metody uczenia</h2>
+<ul>
+<li><b>SGD</b> - Stochastic Gradient Descent
+<ul>
+<li>Gradient jest liczony dla każdej próbki z osobna, a nie całego zbioru danych na raz</li>
+<li>Przyspiesza czas szkolenia</li>
+
+</ul></li>
+<li><b>SGD with momentum</b> 
+<ul>
+<li>Przy liczeniu gradientu brana jest pod uwagę uśredniona wartość z wielu poprzednich aktualizacji lub tylko poprzednia aktualizacja.</li>
+<li>Nie modyfikujemy stałej uczenia \(\alpha\)</li>
+<li>Parametr \(\beta\) określa wagę poprzednich aktualizacji</li>
+<li>Nowa wartość: 
+<ul>
+<li>\(j\) - indeks wagi</li>
+<li>\(i\) - iteracja</li>
+<li>\(\Delta w_j^{i}=\beta \Delta w_{j}^{i-1}+\alpha \frac{dC}{dw_j}\)</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-orgd9fa1f0">
+<h3 id="orgd9fa1f0"></h3>
+<ul>
+<li><p>
+<b>RMSProp</b>
+</p>
+<ul>
+<li>Wykorzystuje średnią z przeszłych gradientów do dostoswanie stałej uczenia \(\alpha\)</li>
+<li>Nowa wartość:
+<ul>
+<li>\(v_j\) - średnia kwadratowa poprzednich gradientów</li>
+<li>\(\Delta w_j=\frac{\alpha}{\sqrt{v_j}}\frac{dC}{dw_j}\)</li>
+
+</ul></li>
+
+</ul>
+<ul>
+<li><b>ADAM</b>
+<ul>
+<li>Połączenie <b>RMSProp</b> i <b>SGD with momentum</b></li>
+<li>Uwzględniamy poprzednie aktualizacje oraz dostosowujemy stałą uczenia \(\alpha\)</li>
+
+</ul></li>
+<li><b>Nestorov</b>
+<ul>
+<li>Podobna do <b>SGD with momentum</b></li>
+<li>Wagi są aktualizowane zgodnie z pędem i dopiero wtedy liczony jest kolejny gradient</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orge473c68">
+<h2 id="orge473c68">Loss functions</h2>
+<ul>
+<li>Klasyfiaktory binarne
+<ul>
+<li><p>
+Binary Cross-Entropy
+</p>
+
+
+<div class="figure">
+<p><img src="./images/4a.png" alt="4a.png" />
+</p>
+</div></li>
+<li><p>
+Hinge loss
+</p>
+
+
+<div class="figure">
+<p><img src="./images/4c.png" alt="4c.png" />
+</p>
+</div></li>
+<li><p>
+Squared Hinge Loss
+</p>
+
+
+<div class="figure">
+<p><img src="./images/4d.png" alt="4d.png" />
+</p>
+</div></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-orgf816e3b">
+<h3 id="orgf816e3b"></h3>
+<ul>
+<li><p>
+Klasyfikatory wieloklasowe
+</p>
+<ul>
+<li><p>
+Categorical Cross-Entropy
+</p>
+
+
+<div class="figure">
+<p><img src="./images/4b.png" alt="4b.png" />
+</p>
+</div></li>
+<li>Kullback-Leibler divergence(relative entropy)</li>
+
+</ul>
+
+<p>
+Pozwala na porónwanie dwóch rozkładów prawdopodobieństwa.
+</p>
+
+
+<div class="figure">
+<p><img src="./images/4e.png" alt="4e.png" />
+</p>
+</div></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org281e703">
+<h2 id="org281e703">Inicjalizacja wag</h2>
+<ul>
+<li>Dobra inicjalizacja wag pomaga zredukować <b>Vanishing Gradient Problem</b>.</li>
+<li>Kilka ważnych cech:
+<ul>
+<li>Wagi nie powinny być małe</li>
+<li>Wagi nie powinny być takie same</li>
+<li>Wagi powinny mieć wysoką wariancję</li>
+<li>Wybór metody inicjalizacja zależny od użytych funkcji aktywacji</li>
+<li>Pod uwagę brana ilość wejść/wyjść w wartswie.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="figure">
+<p><img src="./images/5a.png" alt="5a.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org973a27d">
+<h3 id="org973a27d">Stała uczenia</h3>
+<ul>
+<li>Określa jak duży krok wykonywany jest przy aktualizacji wag.</li>
+<li><b>Learning rate decay</b> - wraz z liczbą epok zmniejsza się stałą uczenia.
+<ul>
+<li>Pozwala na zmniejszenie szansy na 'przeskoczenie' minimum</li>
+<li>Przypomina <b>simulated annealing</b></li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/5b.png" alt="5b.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org8c12e27">
+<h3 id="org8c12e27">Batch normalization</h3>
+<ul>
+<li>Normalizacja polega na przeskalowaniu cech na ten sam przedział. Najczęście na [0; 1].</li>
+<li><b>Batch normalization</b> działa tak samo jak normalizacja danych wejściowych, z tym że znajduje się pomiędzy warstwami.</li>
+<li>Co daje <b>batch normalization</b>?
+<ul>
+<li>Przestrzeń wejść jest bardziej symetryczna - można używać wyższych stałych uczenia</li>
+<li>Zmniejsza istotność wag początkowych.</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/5c.png" alt="5c.png" width="500px" />
 </p>
 </div>
 </section>
 </section>
 <section>
-<section id="slide-org3d9ca04">
-<h2 id="org3d9ca04">Psik, czekaj, Adasiu, kotka wygonię</h2>
-<p>
-5
+<section id="slide-orga95b69a">
+<h2 id="orga95b69a">Regularyzacja</h2>
+<ul>
+<li>Celem regularyzacji jest zmniejszenie overfittingu.</li>
+<li>Innymi słowy: staramy się zwiększyć bias i zmniejszyć wariancję na zbiorze treningowym.</li>
+<li>Poświęcamy dokładność na zbiorze treningowym licząc na otrzymanie lepiej generalizującego modelu.</li>
+
+</ul>
+</section>
+<section id="slide-org018ce18">
+<h3 id="org018ce18"></h3>
+<ul>
+<li><p>
+Regularyzacja <b>Dropout</b>
 </p>
+
+<p>
+Przypisujemy dla warstwy pewne prawdopodobieństwo pominięcia neuronu.
+</p>
+
+<p>
+Pominięte neurony nie biorą udziału w danej iteracji <b>gradient descent</b>.
+</p></li>
+
+<li><p>
+Regularyzacja <b>L1</b> i <b>L2</b>
+Polegają na dodaniu pewnego wyrażenia regularyzującego do funkcji kosztu.
+</p>
+
+<div class="figure">
+<p><img src="./images/6a.png" alt="6a.png" width="600px" />
+</p>
+</div></li>
+
+</ul>
+</section>
+<section id="slide-org7c04b72">
+<h3 id="org7c04b72"></h3>
+<ul>
+<li>Regularyzacja przez <b>augmentację</b>
+<ul>
+<li>Polega na wygenerowaniu nowych danych treningowych na podstawie już posiadanych.</li>
+<li>Zwiększanie ilości danych zmniejsza wariancję i zwiększa bias.</li>
+
+</ul></li>
+
+</ul>
+
 </section>
 </section>
 <section>
-<section id="slide-org398d50f">
-<h2 id="org398d50f">Chodź, Adasiu, zapraszam do pokoju</h2>
-<p>
-6
-</p>
+<section id="slide-orgb7bc129">
+<h2 id="orgb7bc129">Sieci konwolucyjne - budowa</h2>
 </section>
 </section>
 <section>
-<section id="slide-org08e8be3">
-<h2 id="org08e8be3">Tutaj uprawiają seks</h2>
-<p>
-7
-</p>
+<section id="slide-org8b32629">
+<h2 id="org8b32629">Sieci konwolucyjne - uczenie</h2>
 </section>
 </section>
 <section>
-<section id="slide-org47b2688">
-<h2 id="org47b2688">O, zobacz, Adasiu, ja dymam</h2>
-<p>
-8
-</p>
+<section id="slide-org640244d">
+<h2 id="org640244d">Opis scikitlearn</h2>
 </section>
 </section>
 <section>
-<section id="slide-org231e3b0">
-<h2 id="org231e3b0">Czekaj, zamknę Adasiu drzwi</h2>
-<p>
-9
-</p>
-</section>
-</section>
-<section>
-<section id="slide-org147141e">
-<h2 id="org147141e">Zamknę Adasiu drzwi i już będę mówił</h2>
-<p>
-10
-</p>
-</section>
-</section>
-<section>
-<section id="slide-org5d16f7a">
-<h2 id="org5d16f7a">Dziękujemy</h2>
-<div class="outline-text-2" id="text-org5d16f7a">
+<section id="slide-orga0b3717">
+<h2 id="orga0b3717">Keras</h2>
+<div class="outline-text-2" id="text-orga0b3717">
 </div>
 </section>
-<section id="slide-orgd7bdf41">
-<h3 id="orgd7bdf41">Zespół</h3>
+<section id="slide-orgb6235f5">
+<h3 id="orgb6235f5">PyTorch</h3>
+</section>
+</section>
+<section>
+<section id="slide-org14f88ba">
+<h2 id="org14f88ba">Dziękujemy</h2>
+<div class="outline-text-2" id="text-org14f88ba">
+</div>
+</section>
+<section id="slide-org254bf90">
+<h3 id="org254bf90">Zespół</h3>
 <ul>
 <li>Andrzej Ratajczak</li>
 <li>Damian Wasilenko</li>
