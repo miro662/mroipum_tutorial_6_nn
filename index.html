@@ -31,8 +31,8 @@
 </section>
 
 <section>
-<section id="slide-org2caa95f">
-<h2 id="org2caa95f">Neuron</h2>
+<section id="slide-org3b7b2a3">
+<h2 id="org3b7b2a3">Neuron</h2>
 <ul>
 <li>Struktura wzorowana na budowie biologicznego neuronu</li>
 <li>Dowolna liczba wejść z różną wagą</li>
@@ -55,8 +55,8 @@ Wyjście to wynik funkcji aktywacji dla sumy ważonej wejść:
 </div>
 
 </section>
-<section id="slide-org2e2959d">
-<h3 id="org2e2959d">Funkcja aktywacji</h3>
+<section id="slide-orge3a741b">
+<h3 id="orge3a741b">Funkcja aktywacji</h3>
 <p>
 Powinna być nieliniowa, aby wyjście nie było kombinacją liniową wejść.
 <img src="./images/1b.png" alt="1b.png" />
@@ -65,8 +65,8 @@ Powinna być nieliniowa, aby wyjście nie było kombinacją liniową wejść.
 </section>
 </section>
 <section>
-<section id="slide-orgfe7b033">
-<h2 id="orgfe7b033">Multi Layer Perceptron - Budowa</h2>
+<section id="slide-org3cc6552">
+<h2 id="org3cc6552">Multi Layer Perceptron - Budowa</h2>
 <p>
 Budowa MLP polega na zgrupowaniu neuronów w warstwy.
 </p>
@@ -94,8 +94,8 @@ Budowa MLP polega na zgrupowaniu neuronów w warstwy.
 </p>
 
 </section>
-<section id="slide-orgd9c7eca">
-<h3 id="orgd9c7eca"></h3>
+<section id="slide-orgf90d1dd">
+<h3 id="orgf90d1dd"></h3>
 
 <div class="figure">
 <p><img src="./images/2a.png" alt="2a.png" />
@@ -103,8 +103,8 @@ Budowa MLP polega na zgrupowaniu neuronów w warstwy.
 </div>
 
 </section>
-<section id="slide-org65fed0d">
-<h3 id="org65fed0d">Backpropagation</h3>
+<section id="slide-org6410045">
+<h3 id="org6410045">Backpropagation</h3>
 <p>
 Celem szkolenia jest zminimaliozwanie funkcji kosztu:
 \(C(w_1, w_2, ..., w_M) =\) np. błąd średniokwadratowy
@@ -123,8 +123,8 @@ Aby wyznaczyć elementy wektora \(\nabla C\) stosuje się algorytm <code>propaga
 Konceptualnie jest to po prostu liczenie pochodnych po różnych wagach przy użyciu <code>reguły łańcuchowej</code>.
 </p>
 </section>
-<section id="slide-org8f8f58e">
-<h3 id="org8f8f58e">Przykłady</h3>
+<section id="slide-org4c6a4ff">
+<h3 id="org4c6a4ff">Przykłady</h3>
 <ul>
 <li>\(x\) i \(y\) to stałe wektory o równych wymiarach</li>
 <li>\(C(y, f^N(W^Nf^{N-1}(W^{N-1}...f^1(W^x))))\) to funkcja kosztu, zmiennymi są wagi</li>
@@ -145,8 +145,8 @@ Przykłady:
 </ul>
 
 </section>
-<section id="slide-orga3f0cd4">
-<h3 id="orga3f0cd4">Vanishing gradient problem</h3>
+<section id="slide-org7acd203">
+<h3 id="org7acd203">Vanishing gradient problem</h3>
 <ul>
 <li>Wartości gradientów w pierwszych warstawch sieci osiągają bardzo małe wartości, przez co prawie się nie zmieniają.</li>
 <li>Wynika to z tego, że podczas liczenia pochodnych z użyciem reguły łańcuchowej mnożymy wiele małych wartości.</li>
@@ -165,8 +165,8 @@ Rozwiązania: Batch Normalization, użycie funkcji aktywacji, które nie skutkuj
 </section>
 </section>
 <section>
-<section id="slide-orgdf30678">
-<h2 id="orgdf30678">Metody uczenia</h2>
+<section id="slide-org3e4c473">
+<h2 id="org3e4c473">Metody uczenia</h2>
 <ul>
 <li><b>SGD</b> - Stochastic Gradient Descent
 <ul>
@@ -191,8 +191,8 @@ Rozwiązania: Batch Normalization, użycie funkcji aktywacji, które nie skutkuj
 
 </ul>
 </section>
-<section id="slide-orgd9fa1f0">
-<h3 id="orgd9fa1f0"></h3>
+<section id="slide-orgbaa5d02">
+<h3 id="orgbaa5d02"></h3>
 <ul>
 <li><p>
 <b>RMSProp</b>
@@ -228,8 +228,8 @@ Rozwiązania: Batch Normalization, użycie funkcji aktywacji, które nie skutkuj
 </section>
 </section>
 <section>
-<section id="slide-orge473c68">
-<h2 id="orge473c68">Loss functions</h2>
+<section id="slide-org468a1c5">
+<h2 id="org468a1c5">Loss functions</h2>
 <ul>
 <li>Klasyfiaktory binarne
 <ul>
@@ -265,8 +265,8 @@ Squared Hinge Loss
 
 </ul>
 </section>
-<section id="slide-orgf816e3b">
-<h3 id="orgf816e3b"></h3>
+<section id="slide-orgadb5fe7">
+<h3 id="orgadb5fe7"></h3>
 <ul>
 <li><p>
 Klasyfikatory wieloklasowe
@@ -299,8 +299,8 @@ Pozwala na porónwanie dwóch rozkładów prawdopodobieństwa.
 </section>
 </section>
 <section>
-<section id="slide-org281e703">
-<h2 id="org281e703">Inicjalizacja wag</h2>
+<section id="slide-orgc302b29">
+<h2 id="orgc302b29">Inicjalizacja wag</h2>
 <ul>
 <li>Dobra inicjalizacja wag pomaga zredukować <b>Vanishing Gradient Problem</b>.</li>
 <li>Kilka ważnych cech:
@@ -321,8 +321,8 @@ Pozwala na porónwanie dwóch rozkładów prawdopodobieństwa.
 </div>
 
 </section>
-<section id="slide-org973a27d">
-<h3 id="org973a27d">Stała uczenia</h3>
+<section id="slide-org77bade6">
+<h3 id="org77bade6">Stała uczenia</h3>
 <ul>
 <li>Określa jak duży krok wykonywany jest przy aktualizacji wag.</li>
 <li><b>Learning rate decay</b> - wraz z liczbą epok zmniejsza się stałą uczenia.
@@ -341,8 +341,8 @@ Pozwala na porónwanie dwóch rozkładów prawdopodobieństwa.
 </div>
 
 </section>
-<section id="slide-org8c12e27">
-<h3 id="org8c12e27">Batch normalization</h3>
+<section id="slide-org61ae633">
+<h3 id="org61ae633">Batch normalization</h3>
 <ul>
 <li>Normalizacja polega na przeskalowaniu cech na ten sam przedział. Najczęście na [0; 1].</li>
 <li><b>Batch normalization</b> działa tak samo jak normalizacja danych wejściowych, z tym że znajduje się pomiędzy warstwami.</li>
@@ -363,8 +363,8 @@ Pozwala na porónwanie dwóch rozkładów prawdopodobieństwa.
 </section>
 </section>
 <section>
-<section id="slide-orga95b69a">
-<h2 id="orga95b69a">Regularyzacja</h2>
+<section id="slide-org96b003d">
+<h2 id="org96b003d">Regularyzacja</h2>
 <ul>
 <li>Celem regularyzacji jest zmniejszenie overfittingu.</li>
 <li>Innymi słowy: staramy się zwiększyć bias i zmniejszyć wariancję na zbiorze treningowym.</li>
@@ -372,8 +372,8 @@ Pozwala na porónwanie dwóch rozkładów prawdopodobieństwa.
 
 </ul>
 </section>
-<section id="slide-org018ce18">
-<h3 id="org018ce18"></h3>
+<section id="slide-org2f3f64b">
+<h3 id="org2f3f64b"></h3>
 <ul>
 <li><p>
 Regularyzacja <b>Dropout</b>
@@ -399,8 +399,8 @@ Polegają na dodaniu pewnego wyrażenia regularyzującego do funkcji kosztu.
 
 </ul>
 </section>
-<section id="slide-org7c04b72">
-<h3 id="org7c04b72"></h3>
+<section id="slide-orgf7ee558">
+<h3 id="orgf7ee558"></h3>
 <ul>
 <li>Regularyzacja przez <b>augmentację</b>
 <ul>
@@ -414,38 +414,151 @@ Polegają na dodaniu pewnego wyrażenia regularyzującego do funkcji kosztu.
 </section>
 </section>
 <section>
-<section id="slide-orgb7bc129">
-<h2 id="orgb7bc129">Sieci konwolucyjne - budowa</h2>
+<section id="slide-org85435fc">
+<h2 id="org85435fc">Sieci CNN - budowa</h2>
+<ul>
+<li>Sieci CCN składają się z kilku następujących typów warstw:
+<ul>
+<li>Warstwy konwolucyjne</li>
+<li>Warstwy poolingu</li>
+<li>Warstwy w pełni połączone - takie same jak w MLP</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/7a.png" alt="7a.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-org8b466b2">
+<h3 id="org8b466b2">Warstwy konwolucyjne</h3>
+<ul>
+<li>Wykonują proces <b>konwolucji</b>, polegający na, aplikacji filtra na pewnym framencie danych wejściowych.</li>
+<li>Aplikacja filtra polega na obliczeniu <b>dot productu</b> między filtrem a fragmentem danych.</li>
+<li>Parametry:
+<ul>
+<li><b>stride</b> - pozwala na zmianę sposobu przesuwania filtra</li>
+<li><b>padding</b> - pozwala na dodanie zer wokół, aby uniknąć zmniejszania utraty wymiarów</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/7b.png" alt="7b.png" width="550px" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgd3abf8b">
+<h3 id="orgd3abf8b"></h3>
+<ul>
+<li>W warstwach konwolucyjnych zwykle znajduje się więcej niż jeden filtr.
+<img src="./images/7d.png" alt="7d.png" /></li>
+
+</ul>
+</section>
+<section id="slide-orga0ee45e">
+<h3 id="orga0ee45e">Warstwy poolingu</h3>
+<ul>
+<li>Pozwala na <b>downsampling</b> wejść.</li>
+<li>Parametr <b>filter</b> pozwala na wybór wielkości okna do uśrednienia.</li>
+<li>Parametr <b>stride</b> pozwala określić jak wygląda przesuwanie okna.</li>
+<li>Dwie popularne sposoby poolingu:
+<ul>
+<li>Average pooling - uśredniona wartość z okna</li>
+<li>Maximum pooling - maksymalna wartość z okna</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/7c.png" alt="7c.png" width="600px" />       
+</p>
+</div>
+
 </section>
 </section>
 <section>
-<section id="slide-org8b32629">
-<h2 id="org8b32629">Sieci konwolucyjne - uczenie</h2>
+<section id="slide-org08faa33">
+<h2 id="org08faa33">Sieci CNN - uczenie</h2>
+<ul>
+<li>W przypadku warstw końcowych trening wygląda identycznie jak w MLP.</li>
+<li>Warstwy z poolingiem nie posiadają parametrów do trenowania.</li>
+<li>W warstwach konwolucyjnych wagami są wartości filtrów.</li>
+<li>Ideowo backpropagation oraz dostosowywanie wag działa jak w MLP.</li>
+<li>Przy liczeniu pochodnych trzeba uwzględnić warstwy poolingu.</li>
+
+</ul>
 </section>
 </section>
 <section>
-<section id="slide-org640244d">
-<h2 id="org640244d">Opis scikitlearn</h2>
+<section id="slide-org998773d">
+<h2 id="org998773d">Scikitlearn</h2>
+<ul>
+<li>Wsparcie dla MLP:
+<ul>
+<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html">sklearn.neural​_network.MLPClassifier</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPRegressor.html">sklearn.neural​_network.MLPRegressor</a></li>
+
+</ul></li>
+<li>API identycznie jak dla pozostałych modeli: <code>fit(X, y)</code>, <code>predict(x)</code>, etc&#x2026;</li>
+<li>Można dostosować wielkości ukrytych wartsw, funkcje aktywacji, solvery i inne hiperparametry.</li>
+<li>Brak wsparcia dla akceleracji GPU.</li>
+<li>Brak wsparcia dla CNN.</li>
+<li>Nie nadaje się do produkcyjnych zastosowań.</li>
+
+</ul>
 </section>
 </section>
 <section>
-<section id="slide-orga0b3717">
-<h2 id="orga0b3717">Keras</h2>
-<div class="outline-text-2" id="text-orga0b3717">
+<section id="slide-org1af11ed">
+<h2 id="org1af11ed">Keras</h2>
+<ul>
+<li>Wysokopoziomowa biblioteka umożliwiająca łatwe definiowanie sieci neuronowych.</li>
+<li>Posiada wsparcie dla większości popularnych typów warstw.</li>
+<li>Pozwala na tworzenie własnych typów warstw.</li>
+<li>Umożliwiającą akcelerację GPU, wspiera backendy dla kart Nvidia i AMD.</li>
+<li>Kompatybilny z API Scikitlearn, nakładka <a href="https://keras.io/scikit-learn-api/">KerasClassifier</a></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/9.png" alt="9.png" width="600px" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org03153b4">
+<h2 id="org03153b4">PyTorch</h2>
+<ul>
+<li>W porównaniu do Kerasa dość niskopoziomowa.</li>
+<li>Bardziej elastycznia niż Keras, ale trudniejsza w użyciu.</li>
+<li><b>PyTorch Tensors</b> -  działają one identycznie jak tablice w numpy, ale operacje na nich są akcelerowane za pomocą GPU.</li>
+<li>Wspiera akcelerację GPU, ale tylko dla kart Nvidia z rdzeniami CUDA.</li>
+<li>Wspiera Javę i C++</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org5400a1f">
+<h2 id="org5400a1f">Dziękujemy</h2>
+<div class="outline-text-2" id="text-org5400a1f">
 </div>
 </section>
-<section id="slide-orgb6235f5">
-<h3 id="orgb6235f5">PyTorch</h3>
-</section>
-</section>
-<section>
-<section id="slide-org14f88ba">
-<h2 id="org14f88ba">Dziękujemy</h2>
-<div class="outline-text-2" id="text-org14f88ba">
-</div>
-</section>
-<section id="slide-org254bf90">
-<h3 id="org254bf90">Zespół</h3>
+<section id="slide-org309e3c2">
+<h3 id="org309e3c2">Zespół</h3>
 <ul>
 <li>Andrzej Ratajczak</li>
 <li>Damian Wasilenko</li>
