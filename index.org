@@ -192,6 +192,11 @@ $Y = f(\sum_{i=1}^{n} W_i*X_i)$
 #+attr_html: :width 600px
 [[./images/7c.png]]       
 
+** Architektury
+   - AlexNet - 2012 - 5 warstw konwolucyjnych, 3 warstwy MLP, 60 milionów parametrów. Jako pierwsza używała funkcji ReLU do aktywacji.
+   - Inception - 2014, 2015, 2016 - Wprowadza ideę budowania sieci na bazie modulów. Wewnątrz modułu może być wiele równoległych wartsw konwolucyjnych. Moduły nazwano 'Inception modules'.
+   - Residual neural network - 2015, 2017 - wprowadza tak zwane ~skip connections~, czyli połączenia pomiędzy nie sąsiadującymi warstwami.
+
 * Sieci CNN - uczenie
   - W przypadku warstw końcowych trening wygląda identycznie jak w MLP.
   - Warstwy z poolingiem nie posiadają parametrów do trenowania.
